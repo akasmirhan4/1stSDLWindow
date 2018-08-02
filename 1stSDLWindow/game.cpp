@@ -1,4 +1,5 @@
 #include "game.h"
+#include "TextureManager.h"
 
 SDL_Texture* playertex;
 SDL_Rect srcR, destR;
@@ -33,14 +34,12 @@ void Game::init(const char * title, int xpos, int ypos, int width, int height, b
 			std::cout << "Renderer created!..." << std::endl;
 		}
 
-		SDL_Surface* tempSurface = IMG_Load("assets/player/player.png");
-		if (tempSurface) {
-			playertex = SDL_CreateTextureFromSurface(renderer, tempSurface);
-			SDL_FreeSurface(tempSurface);
+		playertex = TextureManager::LoadTexture("assets/player/player.png", renderer);
+		if (playertex) {
 			std::cout << "Player created!..." << std::endl;
 		}
 		else {
-			std::cout << "player image not found!..." << std::endl;
+			std::cout << "Player image not found!..." << std::endl;
 		}
 		isRunning = true;
 	}
