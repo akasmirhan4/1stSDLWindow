@@ -5,6 +5,8 @@
 GameObject* player;
 GameObject* zombie;
 
+SDL_Renderer* Game::renderer = nullptr;
+
 Game::Game()
 {
 }
@@ -34,8 +36,8 @@ void Game::init(const char * title, int xpos, int ypos, int width, int height, b
 			std::cout << "Renderer created!..." << std::endl;
 		}
 
-		player = new GameObject("assets/characters/player.png", renderer,300,50);
-		zombie = new GameObject("assets/characters/zombie.png", renderer, 50, 50);
+		player = new GameObject("assets/characters/player.png",300,50);
+		zombie = new GameObject("assets/characters/zombie.png", 50, 50);
 
 		isRunning = true;
 	}
