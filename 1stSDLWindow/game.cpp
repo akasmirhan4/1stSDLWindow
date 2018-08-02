@@ -1,10 +1,11 @@
 #include "game.h"
 #include "TextureManager.h"
 #include "GameObject.h"
+#include "Map.h"
 
 GameObject* player;
 GameObject* zombie;
-
+Map* map;
 SDL_Renderer* Game::renderer = nullptr;
 
 Game::Game()
@@ -38,7 +39,7 @@ void Game::init(const char * title, int xpos, int ypos, int width, int height, b
 
 		player = new GameObject("assets/characters/player.png",300,50);
 		zombie = new GameObject("assets/characters/zombie.png", 50, 50);
-
+		map = new Map();
 		isRunning = true;
 	}
 	else {
@@ -72,6 +73,7 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 	//this is where we add stuff to render
+	map->DrawMap();
 	player->Render();
 	zombie->Render();
 	SDL_RenderPresent(renderer);
