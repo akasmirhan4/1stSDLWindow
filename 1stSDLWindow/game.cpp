@@ -1,9 +1,9 @@
 #include "game.h"
 #include "TextureManager.h"
+#include "GameObject.h"
 
-SDL_Texture* playertex;
-SDL_Rect srcR, destR;
-
+GameObject* player;
+GameObject* zombie;
 
 Game::Game()
 {
@@ -34,13 +34,9 @@ void Game::init(const char * title, int xpos, int ypos, int width, int height, b
 			std::cout << "Renderer created!..." << std::endl;
 		}
 
-		playertex = TextureManager::LoadTexture("assets/player/player.png", renderer);
-		if (playertex) {
-			std::cout << "Player created!..." << std::endl;
-		}
-		else {
-			std::cout << "Player image not found!..." << std::endl;
-		}
+		player = new GameObject("assets/characters/player.png", renderer,300,50);
+		zombie = new GameObject("assets/characters/zombie.png", renderer, 50, 50);
+
 		isRunning = true;
 	}
 	else {
@@ -66,17 +62,16 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	counter++;
-	destR.h = 128;
-	destR.w = 128;
-	destR.x = counter;
+	player->Update();
+	zombie->Update();
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
 	//this is where we add stuff to render
-	SDL_RenderCopy(renderer, playertex, NULL, &destR);
+	player->Render();
+	zombie->Render();
 	SDL_RenderPresent(renderer);
 }
 
