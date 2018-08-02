@@ -1,5 +1,9 @@
 #include "game.h"
 
+SDL_Texture* playertex;
+SDL_Rect srcR, destR;
+
+
 Game::Game()
 {
 }
@@ -29,6 +33,15 @@ void Game::init(const char * title, int xpos, int ypos, int width, int height, b
 			std::cout << "Renderer created!..." << std::endl;
 		}
 
+		SDL_Surface* tempSurface = IMG_Load("assets/player/player.png");
+		if (tempSurface) {
+			playertex = SDL_CreateTextureFromSurface(renderer, tempSurface);
+			SDL_FreeSurface(tempSurface);
+			std::cout << "Player created!..." << std::endl;
+		}
+		else {
+			std::cout << "player image not found!..." << std::endl;
+		}
 		isRunning = true;
 	}
 	else {
@@ -54,15 +67,17 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	cnt++;
-	std::cout << cnt << std::endl;
+	counter++;
+	destR.h = 128;
+	destR.w = 128;
+	destR.x = counter;
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
 	//this is where we add stuff to render
-
+	SDL_RenderCopy(renderer, playertex, NULL, &destR);
 	SDL_RenderPresent(renderer);
 }
 
